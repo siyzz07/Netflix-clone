@@ -1,7 +1,6 @@
 
 import logo from "../assets/Netflix_Logo_PMS.png";
 import d_arrow from "../assets/down.png";
-import Login from "./Login";
 import bell from "../assets/bell.png";
 
 const Navbar = () => {
