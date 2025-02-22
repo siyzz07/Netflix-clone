@@ -1,14 +1,24 @@
 import { useEffect } from "react";
-import img from "../assets/eeeee.jpeg";
+import YouTube from "react-youtube";
 import axios from "axios";
-import { imgUrl, baseUrl } from "../constants/constant";
+import { imgUrl, baseUrl,API_KEY } from "../constants/constant";
 import { useState } from "react";
 import "./style.css";
+import ForYoutub from "./ForYoutub";
 
 type moviePorps = {
   title: string;
   url: string;
 };
+
+const opts = {
+  height: '390',
+  width: '640',
+  playerVars: {
+    // https://developers.google.com/youtube/player_parameters
+    autoplay: 1,
+  }
+}
 
 type Movie = {
   id: number;
@@ -16,10 +26,20 @@ type Movie = {
   backdrop_path: string;
   description: string;
 };
+
+
+
+
 const RowPost1: React.FC<moviePorps> = (props) => {
   const { title, url } = props;
 
+
+  // states
   const [state, setSate] = useState<Movie[]>([]);
+  const [urlid,setUrlid]=useState<any>('')
+  const [popup,setPopup]=useState<Boolean>(false)
+
+
 
   const instance = axios.create({
     baseURL: `${baseUrl}`,
@@ -33,7 +53,6 @@ const RowPost1: React.FC<moviePorps> = (props) => {
     instance
       .get(`${url}`)
       .then((response) => {
-        console.log(response.data);
         setSate(response.data.results);
       })
       .catch((error) => {
@@ -41,7 +60,19 @@ const RowPost1: React.FC<moviePorps> = (props) => {
       });
   }, []);
 
-  console.log("asasasdasdasdasd", state);
+const handleVedio=(id:number)=>{
+  setPopup(!popup)
+  instance.get(`movie/${id}/videos?api_key=${API_KEY}&language=en-US`).then((response)=>{
+    if(response.data.results.length!=0){
+      setUrlid(response.data.results[0])
+    }
+  })
+}
+
+const pop_vedio_handle:any =()=>{
+  setPopup(false)
+  setUrlid('')
+}
 
   return (
     <div className=" p-5 pl-25">
@@ -57,18 +88,20 @@ const RowPost1: React.FC<moviePorps> = (props) => {
               className="text-center cursor-pointer no-scroll action"
             >
               <img
+                onClick={():void=>handleVedio(Movie.id)}
                 className="rounded-md min-w-[15rem] hover:scale-[1.2]  "
                 src={`${imgUrl + Movie.backdrop_path}`}
                 
               />
               <p className="text-white text-xl font-semibold">{Movie.title}</p>
-              {/* <p className="text-white text-md font-semibold">
-                {Movie.description}
-              </p> */}
             </div>
           ))}
         </div>
       </div>
+
+      {popup==true && <ForYoutub urlid={urlid} vedioid={urlid.key} opt={opts} pop={()=>pop_vedio_handle()}/>}
+       
+              
     </div>
   );
 };
