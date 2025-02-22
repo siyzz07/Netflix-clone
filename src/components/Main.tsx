@@ -3,6 +3,7 @@ import Body from "./TopBody";
 import Navbar from "./Navbar";
 import RowPost from "./RowPost1";
 import { action,originals,topRated } from "../url";
+import Footer from "./Footer";
 
 
 const Main = () => {
@@ -33,6 +34,7 @@ const Main = () => {
           <RowPost title="Action" url={action} />
           <RowPost title="Originals" url={originals} />
         </div>
+        <Footer/>
     </div>
   );
 };

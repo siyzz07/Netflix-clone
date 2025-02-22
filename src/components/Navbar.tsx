@@ -1,7 +1,7 @@
 
 import logo from "../assets/Netflix_Logo_PMS.png";
 import d_arrow from "../assets/down.png";
-import bell from "../assets/bell.png";
+// import bell from "../assets/bell.png";
 
 const Navbar = () => {
 
@@ -21,10 +21,8 @@ const Navbar = () => {
         </div>
 
         {/* Sign In Button */}
-        <div className="flex items-center">
-          <img className="w-7 h-7 cursor-pointer" src={bell} alt="" />
-
-          <p className="text-white ml-4 text-base  cursor-pointer">Account</p>
+        <div className="flex r bg-red-600 borde items-center justify-center h-8 w-[90px] rounded">
+         <p className="text-white  text-base  cursor-pointer ">Sign In</p>
         </div>
       </div>
 
